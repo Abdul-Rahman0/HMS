@@ -1,0 +1,345 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<!-- Hero Welcome Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-gradient-primary border-0 shadow-sm" style="background: linear-gradient(90deg, #e8f5e9 0%, #ffffff 100%);">
+            <div class="card-body p-4 p-md-5 d-flex align-items-center">
+                <div class="flex-shrink-0 me-3 me-md-4">
+                    <div class="rounded-circle bg-success bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; font-size: 3rem;">
+                        😊
+                    </div>
+                </div>
+                <div class="flex-grow-1">
+                    <h2 class="mb-1 fw-bold text-success">Welcome, {{ user.get_full_name }}</h2>
+                    <p class="mb-0 text-muted">Your personalized student dashboard</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <div class="mb-2">
+                    <i class="fas fa-bed fa-2x text-success"></i>
+                </div>
+                <h6 class="text-muted text-uppercase">Room Number</h6>
+                <h3 class="fw-bold mb-0">101</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <div class="mb-2">
+                    <i class="fas fa-tools fa-2x text-warning"></i>
+                </div>
+                <h6 class="text-muted text-uppercase">Pending Requests</h6>
+                <h3 class="fw-bold mb-0">2</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <div class="mb-2">
+                    <i class="fas fa-money-bill-wave fa-2x text-primary"></i>
+                </div>
+                <h6 class="text-muted text-uppercase">Due Payment</h6>
+                <h3 class="fw-bold mb-0">$500</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-4">
+                <div class="mb-2">
+                    <i class="fas fa-calendar-check fa-2x text-info"></i>
+                </div>
+                <h6 class="text-muted text-uppercase">Next Cleaning</h6>
+                <h3 class="fw-bold mb-0">Tomorrow</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Room Status and Recent Maintenance Requests -->
+<div class="row g-4 mb-4">
+    <!-- Room Status -->
+    <div class="col-lg-6 col-12">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-success">Room Status</h5>
+                <span class="badge bg-success bg-opacity-75">All Good</span>
+            </div>
+            <div class="card-body pt-0">
+                <table class="table table-borderless mb-0">
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-bed text-success me-2"></i> Room Number</td>
+                            <td class="fw-bold">101</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-user-friends text-success me-2"></i> Roommates</td>
+                            <td class="fw-bold">2</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-broom text-success me-2"></i> Last Cleaned</td>
+                            <td class="fw-bold">2 days ago</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-tools text-success me-2"></i> Maintenance Status</td>
+                            <td class="fw-bold">No Open Requests</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Maintenance Requests -->
+    <div class="col-lg-6 col-12">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pb-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-success">Recent Maintenance Requests</h5>
+                <button class="btn btn-success btn-sm px-3" data-bs-toggle="modal" data-bs-target="#newRequestModal" style="margin-top: -5px;">
+                    <i class="fas fa-plus me-2"></i>New Request
+                </button>
+            </div>
+            <div class="card-body pt-0">
+                <ul class="list-group list-group-flush maintenance-requests-list">
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 border-bottom">
+                        <div>
+                            <h6 class="mb-1 fw-bold">AC Not Working</h6>
+                            <small class="text-muted">Submitted 2 days ago</small>
+                        </div>
+                        <span class="badge bg-warning text-dark flex-shrink-0 ms-3 align-self-center">In Progress</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 border-bottom">
+                        <div>
+                            <h6 class="mb-1 fw-bold">Leaking Faucet</h6>
+                            <small class="text-muted">Submitted 1 week ago</small>
+                        </div>
+                        <span class="badge bg-success flex-shrink-0 ms-3 align-self-center">Completed</span>
+                    </li>
+                     <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div>
+                            <h6 class="mb-1 fw-bold">Light Bulb Replacement</h6>
+                            <small class="text-muted">Submitted 3 days ago</small>
+                        </div>
+                        <span class="badge bg-success flex-shrink-0 ms-3 align-self-center">Completed</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fee Status -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pb-0">
+                <h5 class="mb-0 fw-bold text-success">Fee Status</h5>
+            </div>
+            <div class="card-body pt-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-bottom">
+                                <td class="align-middle">Monthly Rent</td>
+                                <td class="align-middle">$500</td>
+                                <td class="align-middle">15th March 2024</td>
+                                <td class="align-middle">Pending</td>
+                                <td class="align-middle">
+                                    <button class="btn btn-success btn-sm">Pay Now</button>
+                                </td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <td class="align-middle">Electricity Bill</td>
+                                <td class="align-middle">$50</td>
+                                <td class="align-middle">10th March 2024</td>
+                                <td class="align-middle">Paid</td>
+                                <td class="align-middle">
+                                    <button class="btn btn-outline-success btn-sm">View Receipt</button>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="align-middle">Water Bill</td>
+                                <td class="align-middle">$30</td>
+                                <td class="align-middle">20th February 2024</td>
+                                <td class="align-middle">Paid</td>
+                                <td class="align-middle">
+                                     <button class="btn btn-outline-success btn-sm">View Receipt</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Request Modal -->
+<div class="modal fade" id="newRequestModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Maintenance Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Issue Type</label>
+                        <select class="form-select">
+                            <option>Electrical</option>
+                            <option>Plumbing</option>
+                            <option>HVAC</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Submit Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #e8f5e9 0%, #ffffff 100%) !important;
+}
+.card {
+    border-radius: 18px;
+}
+.card-header {
+    background: none;
+    border-bottom: none;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 1rem 1.5rem;
+}
+.list-group-item:last-child {
+    border-bottom: none;
+}
+.btn-success, .btn-outline-success {
+    background-color: #43a047;
+    border-color: #43a047;
+}
+.btn-success:hover, .btn-outline-success:hover {
+    background-color: #388e3c;
+    border-color: #388e3c;
+}
+.text-success {
+    color: #43a047 !important;
+}
+.bg-success {
+    background-color: #43a047 !important;
+}
+/* Adjusted padding for card bodies after headers */
+.card-body.pt-0 {
+    padding-top: 0 !important;
+}
+
+/* Custom styling for maintenance requests list */
+.maintenance-requests-list .list-group-item {
+    border-bottom: 1px solid #e9ecef; /* Add a light border between items */
+    display: flex; /* Ensure flex properties are applied */
+    align-items: center; /* Vertically center items */
+    padding-right: 15px; /* Restore default padding or adjust as needed */
+    padding-left: 15px;
+}
+
+.maintenance-requests-list .list-group-item:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+.maintenance-requests-list .list-group-item > div {
+    flex-grow: 1; /* Allow the text div to take available space */
+    margin-right: 15px; /* Add some space between text and badge */
+    display: flex; /* Make the div a flex container */
+    flex-direction: column; /* Stack the h6 and small vertically */
+    justify-content: center; /* Vertically center the content within the div */
+}
+
+.maintenance-requests-list .list-group-item h6,
+.maintenance-requests-list .list-group-item small {
+    margin-bottom: 0; /* Ensure no extra bottom margin on text elements */
+    line-height: 1.2; /* Adjust line height for better spacing */
+}
+
+.maintenance-requests-list .list-group-item .badge {
+    align-self: center; /* Explicitly center the badge */
+    min-width: 90px; /* Give badges a minimum width for better alignment */
+    text-align: center;
+    padding: .4em .6em; /* Adjust padding for better visual balance */
+    font-size: .8em; /* Adjust font size if needed */
+}
+
+/* Custom styling for Fee Status table */
+.table.align-middle th,
+.table.align-middle td {
+    vertical-align: middle; /* Ensure content is vertically centered in cells */
+    padding: 12px 15px; /* Adjust cell padding */
+    text-align: left; /* Default text alignment */
+    border-bottom: 1px solid #e9ecef; /* Add border to table cells */
+}
+
+.table.align-middle tbody tr:last-child td {
+    border-bottom: none; /* Remove border from cells in the last row */
+}
+
+.table.align-middle td:nth-last-child(2), /* Status column */
+.table.align-middle td:last-child { /* Action column */
+    /* text-align: center; */ /* Center content in status and action columns */
+}
+
+.table.align-middle td .badge {
+    /* Relying on parent td's vertical-align: middle */
+    display: inline-block; /* Ensure badges behave as inline elements */
+    /* Removed margin: 0 auto; display: block from here */
+}
+
+.table.align-middle td .btn {
+    /* Relying on parent td's vertical-align: middle */
+     display: inline-block; /* Ensure buttons behave as inline elements */
+     /* Removed margin: 0 auto; display: block from here */
+}
+</style>
+{% endblock %} 

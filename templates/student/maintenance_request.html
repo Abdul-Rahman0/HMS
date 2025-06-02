@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Submit Maintenance Request</h4>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Room Information -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Room Information</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Room Number</label>
+                                    <input type="text" class="form-control" value="{{ room_number }}" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Building</label>
+                                    <input type="text" class="form-control" value="{{ building_name }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Request Details -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Request Details</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Request Type</label>
+                                    <select name="request_type" class="form-select" required>
+                                        <option value="">Select Type</option>
+                                        <option value="electrical">Electrical</option>
+                                        <option value="plumbing">Plumbing</option>
+                                        <option value="carpentry">Carpentry</option>
+                                        <option value="cleaning">Cleaning</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="title" class="form-control" required 
+                                           placeholder="Brief description of the issue">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" rows="4" required
+                                              placeholder="Please provide detailed information about the issue..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Priority Level -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Priority Level</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="priority-options">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="priority" 
+                                                   id="priorityLow" value="low" checked>
+                                            <label class="form-check-label" for="priorityLow">
+                                                <i class="fas fa-arrow-down text-success me-2"></i>
+                                                Low - Not urgent, can be addressed during regular maintenance
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="priority" 
+                                                   id="priorityMedium" value="medium">
+                                            <label class="form-check-label" for="priorityMedium">
+                                                <i class="fas fa-equals text-warning me-2"></i>
+                                                Medium - Needs attention soon but not immediately
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="priority" 
+                                                   id="priorityHigh" value="high">
+                                            <label class="form-check-label" for="priorityHigh">
+                                                <i class="fas fa-arrow-up text-danger me-2"></i>
+                                                High - Urgent, requires immediate attention
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Attachments -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Attachments</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Upload Images (Optional)</label>
+                                        <input type="file" name="attachments" class="form-control" 
+                                               accept="image/*" multiple>
+                                        <small class="text-muted">You can upload up to 2 images. Maximum size: 2MB each.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferred Time -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Preferred Maintenance Time</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" name="preferred_date" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Time Slot</label>
+                                    <select name="preferred_time" class="form-select" required>
+                                        <option value="">Select Time Slot</option>
+                                        <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                                        <option value="afternoon">Afternoon (1:00 PM - 4:00 PM)</option>
+                                        <option value="evening">Evening (4:00 PM - 6:00 PM)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Contact Information</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Contact Phone</label>
+                                    <input type="tel" name="contact_phone" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Contact Email</label>
+                                    <input type="email" name="contact_email" class="form-control" 
+                                           value="{{ user.email }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-end">
+                            <a href="{% url 'student_dashboard' %}" class="btn btn-outline-secondary me-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.priority-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-check {
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.form-check:hover {
+    background-color: #f8f9fa;
+}
+
+.form-check-input:checked + .form-check-label {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.form-check-input:checked ~ .form-check {
+    border-color: var(--primary-color);
+    background-color: var(--light-green);
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+.alert {
+    border: none;
+    border-radius: 10px;
+}
+
+.alert-success {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.alert-warning {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.alert-info {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+</style>
+{% endblock %} 

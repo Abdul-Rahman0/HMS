@@ -1,0 +1,373 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<!-- Welcome Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-tools fa-3x"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h2 class="mb-1">Welcome, {{ user.get_full_name }}</h2>
+                        <p class="mb-0">Maintenance Staff Dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-clipboard-list fa-2x text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Total Requests</h6>
+                        <h3 class="mb-0">{{ total_requests }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-clock fa-2x text-warning"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Pending</h6>
+                        <h3 class="mb-0">{{ pending_requests }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-spinner fa-2x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">In Progress</h6>
+                        <h3 class="mb-0">{{ in_progress_requests }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle fa-2x text-success"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Completed</h6>
+                        <h3 class="mb-0">{{ completed_requests }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="row">
+    <!-- Today's Schedule -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Today's Schedule</h5>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    {% for task in today_schedule %}
+                    <div class="timeline-item">
+                        <div class="timeline-icon bg-{{ task.priority|lower }}">
+                            <i class="fas {{ task.icon }}"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-1">{{ task.title }}</h6>
+                                <span class="badge bg-{{ task.priority|lower }}">{{ task.get_priority_display }}</span>
+                            </div>
+                            <p class="text-muted mb-1">{{ task.description }}</p>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                <span>{{ task.location }}</span>
+                                <i class="fas fa-clock text-primary ms-3 me-2"></i>
+                                <span>{{ task.scheduled_time|date:"H:i" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-calendar-day fa-3x text-muted mb-3"></i>
+                        <p class="mb-0">No tasks scheduled for today</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Requests -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Recent Requests</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">AC Not Working</h6>
+                                <p class="text-muted mb-0">Room 101 • 2 days ago</p>
+                            </div>
+                            <span class="badge bg-warning">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">Leaking Faucet</h6>
+                                <p class="text-muted mb-0">Room 203 • 1 week ago</p>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Requests -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">All Maintenance Requests</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Room</th>
+                                <th>Issue</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#001</td>
+                                <td>101</td>
+                                <td>AC Not Working</td>
+                                <td></td>
+                                <td></td>
+                                <td>Mar 15, 2024</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">Update Status</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#002</td>
+                                <td>203</td>
+                                <td>Leaking Faucet</td>
+                                <td></td>
+                                <td></td>
+                                <td>Mar 10, 2024</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Status Modal -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Request Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select">
+                            <option>In Progress</option>
+                            <option>Completed</option>
+                            <option>On Hold</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 15px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.timeline {
+    position: relative;
+    padding: 1rem;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.timeline-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+.bg-high { background-color: #dc3545 !important; }
+.bg-medium { background-color: #ffc107 !important; }
+.bg-low { background-color: #28a745 !important; }
+
+/* Custom styling for maintenance requests list */
+.list-group-flush .list-group-item {
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 15px;
+}
+
+.list-group-flush .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.list-group-flush .list-group-item > div {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.list-group-flush .list-group-item h6,
+.list-group-flush .list-group-item small {
+    margin-bottom: 0;
+    line-height: 1.3;
+}
+
+.list-group-flush .list-group-item .badge {
+    align-self: center;
+    min-width: 90px;
+    text-align: center;
+    padding: .4em .6em;
+    font-size: .8em;
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,343 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<!-- Welcome Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-user-tie fa-3x"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h2 class="mb-1">Welcome, {{ user.get_full_name }}</h2>
+                        <p class="mb-0">Receptionist Dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Total Students</h6>
+                        <h3 class="mb-0">150</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-door-open fa-2x text-success"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Available Rooms</h6>
+                        <h3 class="mb-0">25</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-clipboard-list fa-2x text-warning"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Pending Requests</h6>
+                        <h3 class="mb-0">8</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-money-bill-wave fa-2x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="text-muted mb-1">Today's Revenue</h6>
+                        <h3 class="mb-0">$2,500</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="row">
+    <!-- Recent Check-ins -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Check-ins</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newCheckInModal">
+                    <i class="fas fa-plus me-2"></i>New Check-in
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">John Doe</h6>
+                                <p class="text-muted mb-0">Room 101 • 2 hours ago</p>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">Jane Smith</h6>
+                                <p class="text-muted mb-0">Room 203 • 5 hours ago</p>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Requests -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Recent Maintenance Requests</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">AC Not Working</h6>
+                                <p class="text-muted mb-0">Room 101 • 2 days ago</p>
+                            </div>
+                            <span class="badge bg-warning">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">Leaking Faucet</h6>
+                                <p class="text-muted mb-0">Room 203 • 1 week ago</p>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Status -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Room Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Room Number</th>
+                                <th>Type</th>
+                                <th>Capacity</th>
+                                <th>Occupied</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>101</td>
+                                <td>Double</td>
+                                <td>2</td>
+                                <td>2/2</td>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Single</td>
+                                <td>1</td>
+                                <td>0/1</td>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Check-in Modal -->
+<div class="modal fade" id="newCheckInModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Check-in</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Student Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Room Number</label>
+                        <select class="form-select">
+                            <option>101</option>
+                            <option>102</option>
+                            <option>103</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Check-in Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Duration</label>
+                        <select class="form-select">
+                            <option>1 Month</option>
+                            <option>3 Months</option>
+                            <option>6 Months</option>
+                            <option>1 Year</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Complete Check-in</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.list-group-item {
+    border: none;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 15px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.table.align-middle td:nth-last-child(2),
+.table.align-middle td:last-child {
+    /* text-align: center; */
+}
+
+.table.align-middle td .badge {
+    vertical-align: middle; /* Explicitly align badge vertically */
+    display: inline-block; /* Ensure badges behave as inline elements */
+}
+
+.table.align-middle td .btn {
+    /* ... existing code ... */
+}
+
+/* Custom styling for Fee Status table */
+.table.align-middle th,
+.table.align-middle td {
+    vertical-align: middle; /* Ensure content is vertically centered in cells */
+    padding: 12px 15px; /* Adjust cell padding */
+    text-align: left; /* Default text alignment */
+    border-bottom: 1px solid #e9ecef; /* Add border to table cells */
+}
+
+/* Add specific padding for room status table cells if needed */
+.card .table.align-middle td {
+    padding: 8px 15px; /* Adjusted padding for better alignment in room status table */
+}
+
+.table.align-middle tbody tr:last-child td {
+    /* ... existing code ... */
+}
+</style>
+{% endblock %} 

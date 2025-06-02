@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Edit Profile</h4>
+                </div>
+                <div class="card-body p-4">
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-4">
+                                {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" class="rounded-circle mb-3" width="150">
+                                {% else %}
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 150px; height: 150px;">
+                                    <i class="fas fa-user fa-4x"></i>
+                                </div>
+                                {% endif %}
+                                <div class="mb-3">
+                                    <label for="profile_picture" class="form-label">Change Profile Picture</label>
+                                    <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" name="phone_number" class="form-control" value="{{ user.phone_number }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" name="date_of_birth" class="form-control" value="{{ user.date_of_birth|date:'Y-m-d' }}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Address</label>
+                                        <textarea name="address" class="form-control" rows="3">{{ user.address }}</textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Guardian Information</label>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <input type="text" name="guardian_name" class="form-control" placeholder="Guardian Name" value="{{ user.guardian_name }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="tel" name="guardian_phone" class="form-control" placeholder="Guardian Phone" value="{{ user.guardian_phone }}">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input type="email" name="guardian_email" class="form-control" placeholder="Guardian Email" value="{{ user.guardian_email }}">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <textarea name="guardian_address" class="form-control" rows="2" placeholder="Guardian Address">{{ user.guardian_address }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-4">
+                            <a href="{% url 'change_password' %}" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+</style>
+{% endblock %} 

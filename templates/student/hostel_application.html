@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Hostel Application</h2>
+                        <p class="text-muted">Please fill in all the required information</p>
+                    </div>
+
+                    {% if messages %}
+                    <div class="messages mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'hostel_application' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Personal Information -->
+                        <div class="mb-4">
+                            <h4 class="mb-3">Personal Information</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="full_name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="student_id" class="form-label">Student ID</label>
+                                    <input type="text" class="form-control" id="student_id" name="student_id" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academic Information -->
+                        <div class="mb-4">
+                            <h4 class="mb-3">Academic Information</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="department" class="form-label">Department</label>
+                                    <select class="form-select" id="department" name="department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="computer_science">Computer Science</option>
+                                        <option value="engineering">Engineering</option>
+                                        <option value="business">Business</option>
+                                        <option value="arts">Arts</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="semester" class="form-label">Current Semester</label>
+                                    <input type="number" class="form-control" id="semester" name="semester" min="1" max="8" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Room Preferences -->
+                        <div class="mb-4">
+                            <h4 class="mb-3">Room Preferences</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="room_type" class="form-label">Room Type</label>
+                                    <select class="form-select" id="room_type" name="room_type" required>
+                                        <option value="">Select Room Type</option>
+                                        <option value="single">Single Room</option>
+                                        <option value="double">Double Room</option>
+                                        <option value="triple">Triple Room</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="floor_preference" class="form-label">Floor Preference</label>
+                                    <select class="form-select" id="floor_preference" name="floor_preference">
+                                        <option value="">No Preference</option>
+                                        <option value="1">1st Floor</option>
+                                        <option value="2">2nd Floor</option>
+                                        <option value="3">3rd Floor</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Documents -->
+                        <div class="mb-4">
+                            <h4 class="mb-3">Required Documents</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="id_proof" class="form-label">ID Proof</label>
+                                    <input type="file" class="form-control" id="id_proof" name="id_proof" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fee_receipt" class="form-label">Fee Receipt</label>
+                                    <input type="file" class="form-control" id="fee_receipt" name="fee_receipt" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="mb-4">
+                            <h4 class="mb-3">Additional Information</h4>
+                            <div class="mb-3">
+                                <label for="special_requirements" class="form-label">Special Requirements (if any)</label>
+                                <textarea class="form-control" id="special_requirements" name="special_requirements" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" class="text-decoration-none">terms and conditions</a>
+                            </label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Application
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.form-control, .form-select {
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+}
+
+.btn-primary {
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+</style>
+{% endblock %} 

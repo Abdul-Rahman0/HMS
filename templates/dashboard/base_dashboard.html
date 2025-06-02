@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <h4 class="text-center mb-4 text-success">Hostel Management</h4>
+                <div class="text-center mb-4">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" class="rounded-circle mb-3" width="100">
+                    {% else %}
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px;">
+                            <i class="fas fa-user fa-3x"></i>
+                        </div>
+                    {% endif %}
+                    <h5 class="mb-1">{{ user.get_full_name }}</h5>
+                    <p class="text-muted mb-0">{{ user.role.name|title }}</p>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}" href="{% url 'student_dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'edit_profile' %}">
+                            <i class="fas fa-user-edit me-2"></i>Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-bell me-2"></i>Notifications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'change_password' %}">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <!-- Top navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-bell"></i>
+                                    <span class="badge bg-danger">3</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">New maintenance request</a></li>
+                                    <li><a class="dropdown-item" href="#">Payment due reminder</a></li>
+                                    <li><a class="dropdown-item" href="#">Room cleaning scheduled</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle me-1"></i>{{ user.get_full_name }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'edit_profile' %}"><i class="fas fa-user-edit me-2"></i>Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'change_password' %}"><i class="fas fa-key me-2"></i>Change Password</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Dashboard content -->
+            {% block dashboard_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<style>
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin: 0.25rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar .nav-link {
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: static;
+        height: auto;
+        padding-top: 0;
+    }
+}
+</style>
+{% endblock %} 

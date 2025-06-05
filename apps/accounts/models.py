@@ -52,7 +52,7 @@ class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
     guardian_name = models.CharField(max_length=100)
-    address = models.TextField()
+    address = models.CharField(max_length=255, null=True, blank=True)
     GENDER_CHOICES = [
         ('M', 'Male'),
         ('F', 'Female'),

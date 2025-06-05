@@ -21,19 +21,20 @@ from apps.accounts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('login/', views.login_view, name='login'),
-    path('signup/', views.signup_view, name='signup'),
+    # path('login/', views.login_view, name='login'),
+    # path('signup/', views.signup_view, name='signup'),
+    path('accounts/', include('apps.accounts.urls')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('logout/', views.logout_view, name='logout'),
     
-    # Dashboard URLs
-    path('student/dashboard/', views.student_dashboard, name='student_dashboard'),
-    path('receptionist/dashboard/', views.receptionist_dashboard, name='receptionist_dashboard'),
-    path('maintenance/dashboard/', views.maintenance_dashboard, name='maintenance_dashboard'),
-    path('housekeeping/dashboard/', views.housekeeping_dashboard, name='housekeeping_dashboard'),
+    # # Dashboard URLs
+    # path('student/dashboard/', views.student_dashboard, name='student_dashboard'),
+    # path('receptionist/dashboard/', views.receptionist_dashboard, name='receptionist_dashboard'),
+    # path('maintenance/dashboard/', views.maintenance_dashboard, name='maintenance_dashboard'),
+    # path('housekeeping/dashboard/', views.housekeeping_dashboard, name='housekeeping_dashboard'),
     
-    # User management URLs
+    # User management URLs 
     path('users/', views.user_management, name='user_management'),
     path('users/add/', views.add_user, name='add_user'),
     path('users/<int:user_id>/edit/', views.edit_user, name='edit_user'),

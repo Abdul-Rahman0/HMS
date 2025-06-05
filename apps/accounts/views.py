@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import User, Role
 from django.contrib.auth.hashers import make_password
 import re
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -18,34 +19,50 @@ import re
 @permission_classes([AllowAny])
 def home(request):
     return render(request, 'home.html', {'user': request.user})
-
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
+        
         username = request.POST.get('username')
         password = request.POST.get('password')
         
-        user = authenticate(request, username=username, password=password)
         
+        # Check if username exists
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Username does not exist.')
+            return render(request, 'auth/login.html')
+            
+        # Get user object to check if active
+        user= User.objects.get(username=username)
+        print("user--------------------------->",user)
         if user is not None:
             login(request, user)
             messages.success(request, f'Welcome back, {user.get_full_name()}!')
             
             # Redirect based on user role
+            print("user.role.name--------------------------->",user.role.name)
             if user.role.name == 'student':
-                return redirect('student_dashboard')
+                print("redirecting to student_dashboard")
+               
+                return render(request, 'student/dashboard.html')
+             
             elif user.role.name == 'receptionist':
-                return redirect('receptionist_dashboard')
+                print("redirecting to receptionist_dashboard")
+                return render(request, 'receptionist/dashboard.html')
             elif user.role.name == 'maintenance':
-                return redirect('maintenance_dashboard')
+                print("redirecting to maintenance_dashboard")
+                return render(request, 'maintenance/dashboard.html')
             elif user.role.name == 'housekeeping':
-                return redirect('housekeeping_dashboard')
+                print("redirecting to housekeeping_dashboard")
+                return render(request, 'housekeeping/dashboard.html')
             else:
+                print("redirecting to home")
                 return redirect('home')
-        else:
+        else: 
             messages.error(request, 'Invalid username or password.')
     
     return render(request, 'auth/login.html')
-
+@csrf_exempt
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -280,6 +297,7 @@ def change_password(request):
 
 @login_required
 def student_dashboard(request):
+    print("student_dashboard.....................")
     if request.user.role.name != 'student':
         messages.error(request, 'You do not have permission to access this page.')
         return redirect('home')

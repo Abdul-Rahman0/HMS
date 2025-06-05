@@ -42,14 +42,25 @@ services:
       - hostel_network
     restart: unless-stopped
 
-networks:
-  hostel_network:
-    driver: bridge
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-hostel
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - hostel_network
 
 volumes:
   postgres_data:
     name: hostel_postgres_data
   static_volume:
-    name: hostel_static_volume
   media_volume:
-    name: hostel_media_volume
+
+networks:
+  hostel_network:

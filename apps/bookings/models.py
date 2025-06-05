@@ -15,8 +15,8 @@ class Booking(models.Model):
 
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     room = models.ForeignKey('rooms.Room', on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    check_in_date = models.DateField()
+    check_out_date = models.DateField()
     status = models.CharField(
         max_length=20,
         choices=BookingStatus.choices,

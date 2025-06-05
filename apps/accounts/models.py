@@ -1,24 +1,14 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,Group
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
-class Role(models.Model):
-    ROLE_CHOICES = [
-        ('student', 'Student'),
-        ('admin', 'Admin'),
-        ('receptionist', 'Receptionist'),
-        ('maintenance', 'Maintenance'),
-        ('housekeeping', 'Housekeeping'),
-    ]
-    name = models.CharField(max_length=50, choices=ROLE_CHOICES, unique=True)
 
-    def __str__(self):
-        return self.name
+   
 
 class User(AbstractUser):
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+    
     phone_number = models.CharField(max_length=15, blank=True)
     address = models.TextField(blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -29,29 +19,20 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='custom_users',
+        help_text=_('Assign a group to this user'),
+    )
 
-    def __str__(self):
-        return self.username
-
-    class Meta:
-        ordering = ['-date_joined']
-
-    @property
-    def is_admin(self):
-        return self.role.name == 'admin'
-
-    @property
-    def is_student(self):
-        return self.role.name == 'student'
-
-    @property
-    def is_staff_member(self):
-        return self.role.name in ['receptionist', 'maintenance', 'housekeeping']
-
+    
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
-    guardian_name = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
     address = models.CharField(max_length=255, null=True, blank=True)
     GENDER_CHOICES = [
         ('M', 'Male'),

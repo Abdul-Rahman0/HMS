@@ -6,10 +6,11 @@ from django.conf import settings
 # Create your models here.
 
 class MaintenanceRequest(models.Model):
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , null=True,
+        blank=True,)
     room = models.ForeignKey('rooms.Room', on_delete=models.CASCADE)
-    issue_description = models.TextField()
-    submitted_at = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('open', 'Open'),
         ('in_progress', 'In Progress'),

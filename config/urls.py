@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.accounts import views
-
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -28,6 +30,11 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('logout/', views.logout_view, name='logout'),
     
+    # Public password reset views
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     # # Dashboard URLs
     # path('student/dashboard/', views.student_dashboard, name='student_dashboard'),
     # path('receptionist/dashboard/', views.receptionist_dashboard, name='receptionist_dashboard'),

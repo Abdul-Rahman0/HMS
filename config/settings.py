@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'apps.maintenance',
     'apps.staff',
     'apps.reports',
+    'apps.housekeep',
 ]
 
 # Middleware

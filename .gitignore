@@ -1,0 +1,43 @@
+# Python __pycache__ folders
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migration files (optional, only if you want to ignore them)
+# ** Do NOT ignore if you want to share migration history **
+# */migrations/*.py
+# */migrations/*.pyc
+
+# Environment files
+.env
+*.env
+
+# Python virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# VSCode settings (if using VSCode)
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Media and static root (only if auto-generated)
+media/
+staticfiles/
+
+# Database (if using SQLite)
+*.sqlite3
+
+# macOS files
+.DS_Store
+
+# pycharm project files
+.idea/

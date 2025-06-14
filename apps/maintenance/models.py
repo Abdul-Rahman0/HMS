@@ -8,11 +8,7 @@ from apps.accounts.models import StudentProfile,User
 
 User = get_user_model()
 
-class MaintenanceStaff(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='maintenance_profile')
 
-    def __str__(self):
-        return f"{self.user.username} (Maintenance ID: {self.id})"
 class Receptionist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Receptionist_profile')
     def __str__(self):
@@ -34,6 +30,8 @@ class MaintenanceRequest(models.Model):
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_maintenance_requests')
     created_at = models.DateField(auto_now_add=True)
     resolved_at = models.DateField(null=True, blank=True)
+    request_create = models.BooleanField(default=False)
+    request_complete = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Request #{self.id} for Room {self.room.room_number}"
@@ -69,3 +67,11 @@ class MaintenanceRequest(models.Model):
         self.status = 'completed'
         self.resolved_at = timezone.now()
         self.save()
+
+
+class MaintenanceStaff(models.Model):
+    user = models.ForeignKey(MaintenanceRequest, on_delete=models.CASCADE, related_name='maintenance_requests')
+    
+
+    def __str__(self):
+        return f"{self.user.username} (Maintenance ID: {self.id})"

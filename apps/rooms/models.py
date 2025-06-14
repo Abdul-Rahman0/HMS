@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from apps.accounts.models import StudentProfile  # adjust based on your project
 
 class Room(models.Model):
     ROOM_TYPE_CHOICES = [
@@ -12,7 +14,7 @@ class Room(models.Model):
         ('occupied', 'Occupied'),
         ('maintenance', 'Maintenance'),
     ]
-
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE,null=True,blank=False)
     room_number = models.CharField(max_length=20, unique=True)
     type = models.CharField(max_length=10, choices=ROOM_TYPE_CHOICES , null=True)
     capacity = models.PositiveIntegerField()
@@ -36,15 +38,13 @@ class Room(models.Model):
         
 # Guest Log
 
-from django.db import models
-from django.utils import timezone
-from apps.accounts.models import StudentProfile  # adjust based on your project
+
 
 class GuestLog(models.Model):
     name = models.CharField(max_length=100)
     purpose = models.CharField(max_length=255)
-    check_in_time = models.DateField(default=timezone.now)
-    check_out_time = models.DateField(null=True, blank=True)
+    check_in_time = models.DateTimeField(default=timezone.now)
+    check_out_time = models.DateTimeField(null=True, blank=True)
     associated_student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from apps.rooms.models import Room  # adjust import as needed
-from apps.accounts.models import StudentProfile
+from apps.accounts.models import StudentProfile,User
 
 User = get_user_model()
 
@@ -13,10 +13,12 @@ class MaintenanceStaff(models.Model):
 
     def __str__(self):
         return f"{self.user.username} (Maintenance ID: {self.id})"
+class Receptionist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Receptionist_profile')
+    def __str__(self):
+        return f"{self.user.username} (Maintenance ID: {self.id})"
 
 #  Maintenance request
-
-
 
 class MaintenanceRequest(models.Model):
     STATUS_CHOICES = [
@@ -29,7 +31,7 @@ class MaintenanceRequest(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='student_maintenance_requests')
     issue = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
-    assigned_to = models.ForeignKey(MaintenanceStaff, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_maintenance_requests')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_maintenance_requests')
     created_at = models.DateField(auto_now_add=True)
     resolved_at = models.DateField(null=True, blank=True)
 

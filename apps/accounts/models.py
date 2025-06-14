@@ -33,7 +33,6 @@ class User(AbstractUser):
     
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    student_id = models.IntegerField(null=True, blank=True)
     enrollment_date = models.DateField(null=True, blank=True)
     guardian_name = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=255, null=True, blank=True)  # Already present
@@ -48,8 +47,6 @@ class StudentProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     room_assigned = models.BooleanField(default=False)
-    room = models.ForeignKey('rooms.Room', on_delete=models.SET_NULL, null=True, blank=True)
-
     def __str__(self):
         return f"{self.user.username}'s Profile"
 

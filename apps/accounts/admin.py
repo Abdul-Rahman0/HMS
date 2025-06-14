@@ -3,6 +3,7 @@ from .models import User, StudentProfile, StaffProfile, HostelApplication, Hoste
 from django.utils.html import format_html
 from django.urls import reverse
 from django.urls import path
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib import messages
 # User Register model
@@ -13,18 +14,22 @@ from django.utils.translation import gettext_lazy as _
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone_number', 'address', 'date_of_birth', 'profile_picture', 'guardian_name', 'guardian_phone', 'guardian_email')}),
-        ('Permissions', {'fields': ('is_active','group')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
-    )
-    
-    
     
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-    list_display = ('username', 'email', 'first_name', 'last_name', 'group','is_active','action_buttons')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'group', 'is_active', 'action_buttons')
+    add_fieldsets = (
+    (None, {
+        'classes': ('wide',),
+        'fields': ('username','password1', 'password2' ,'email', 'first_name', 'last_name', 'group'),
+    }),
+)
+
+    fieldsets = (
+        (None, {
+            'fields': ('username', 'email', 'first_name', 'last_name', 'group')
+        }),
+    )
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',)  # custom css ka path
@@ -62,26 +67,21 @@ class UserAdmin(BaseUserAdmin):
         )
     action_buttons.short_description = 'Student Status'
     
+    def response_add(self, request, obj, post_url_continue=None):
+        # Custom redirect after user is created
+        return HttpResponseRedirect(f"/admin/accounts/user/")
     
-    
-    
-    # def save_model(self, request, obj, form, change):
-    #     # ✅ Agar group assign hai to is_staff ko True karo
-    #     if obj.group:
-    #         obj.is_staff = True
-    #         obj.save()  # 👈 Pehle hi save kiya ja raha hai to dobara karna optional hai
 
-    #         # ✅ Django built-in groups me bhi set karo
-    #         obj.groups.set([obj.group])
+    def save_model(self, request, obj, form, change):
+        # ✅ Agar group assign hai to is_staff ko True karo
+        if obj.group:
+            # ✅ Django built-in groups me bhi set karo
+            obj.groups.set([obj.group])
 
-    #     # 🔁 Super call at the end to ensure full save
-    #     super().save_model(request, obj, form, change)
+        # 🔁 Super call at the end to ensure full save
+        super().save_model(request, obj, form, change)
 
-            
-
-
-
-
+   
 
 # Student profile model 
 
@@ -89,14 +89,25 @@ class UserAdmin(BaseUserAdmin):
 class StudentProfileAdmin(admin.ModelAdmin):
     fields = (
         'user',
-        'student_id',
         'enrollment_date',
         'guardian_name',
         'address',
         'room_assigned',
     )
+    list_display = ('user',
+        'enrollment_date',
+        'guardian_name',
+        'address',
+        'room_assigned',)
 
-
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(user__groups__name='Student')  # Filter only those with 'Student' group
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "user":
+            kwargs["queryset"] = User.objects.filter(groups__name="Student")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
 # Register your models here.
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, StudentProfile, StaffProfile, HostelApplication, HostelCertificate
+from .models import User, StudentProfile, HostelApplication, HostelCertificate
 from django.utils.html import format_html
 from django.urls import reverse
 from django.urls import path
@@ -111,6 +111,6 @@ class StudentProfileAdmin(admin.ModelAdmin):
 # Register your models here.
 
 
-admin.site.register(StaffProfile)
+# admin.site.register(StaffProfile)
 admin.site.register(HostelApplication)
 admin.site.register(HostelCertificate)

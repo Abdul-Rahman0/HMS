@@ -34,7 +34,7 @@
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Admin</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">45</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">45</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>student</label>
@@ -42,15 +42,15 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Maintenance</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">30</span>
+                            <span class="badge bg-warning" style="font-size: 1.1rem; font-weight: 700;">30</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Receptionist</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">35</span>
+                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;">35</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <label>Housekeep</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">15</span>
+                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">15</span>
                         </div>
                     </div>
                 </div>
@@ -181,26 +181,41 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Total Bookings Card -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Total Bookings</h5>
+                            <h2 class="mb-0" style="padding-left: 10px;">120</h2>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 250px; overflow-y: auto;">
+                        <div class="d-flex justify-content-between mb-2">
+                            <label>Active Bookings</label>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">45</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <label>Completed Bookings</label>
+                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">60</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <label>Cancelled Bookings</label>
+                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;">15</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <label>Today's Bookings</label>
+                            <span class="badge bg-warning" style="font-size: 1.1rem; font-weight: 700;">8</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <label>Total Revenue</label>
+                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">₹350,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to fetch and update counts
-            function updateCounts() {
-                fetch('/api/dashboard/stats/')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('activeUsers').textContent = data.active_users || 0;
-                    })
-                    .catch(error => console.error('Error fetching dashboard stats:', error));
-            }
-
-            // Initial load
-            updateCounts();
-
-            // Update every 30 seconds
-            setInterval(updateCounts, 30000);
-        });
-    </script>
 {% endblock %}

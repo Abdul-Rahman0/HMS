@@ -30,6 +30,11 @@ class User(AbstractUser):
         help_text=_('Assign a group to this user'),
     )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.group:
+            self.groups.set([self.group])
+
     
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

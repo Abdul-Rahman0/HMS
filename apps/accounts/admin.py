@@ -18,16 +18,23 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
     list_display = ('username', 'email', 'first_name', 'last_name', 'group', 'is_active', 'action_buttons')
+    
     add_fieldsets = (
-    (None, {
-        'classes': ('wide',),
-        'fields': ('username','password1', 'password2' ,'email', 'first_name', 'last_name', 'group'),
-    }),
-)
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'group', 'is_active'),
+        }),
+    )
 
     fieldsets = (
         (None, {
-            'fields': ('username', 'email', 'first_name', 'last_name', 'group')
+            'fields': ('username', 'email', 'first_name', 'last_name', 'group', 'is_active')
+        }),
+        ('Additional Info', {
+            'fields': ('phone_number', 'address', 'date_of_birth', 'profile_picture')
+        }),
+        ('Guardian Info', {
+            'fields': ('guardian_name', 'guardian_phone', 'guardian_email')
         }),
     )
     class Media:
@@ -67,20 +74,23 @@ class UserAdmin(BaseUserAdmin):
         )
     action_buttons.short_description = 'Student Status'
     
-    def response_add(self, request, obj, post_url_continue=None):
-        # Custom redirect after user is created
-        return HttpResponseRedirect(f"/admin/accounts/user/")
-    
-
     def save_model(self, request, obj, form, change):
-        # ✅ Agar group assign hai to is_staff ko True karo
-        if obj.group:
-            # ✅ Django built-in groups me bhi set karo
-            obj.groups.set([obj.group])
-
-        # 🔁 Super call at the end to ensure full save
+        # First save the user
         super().save_model(request, obj, form, change)
+        
+        # Then handle group assignment
+        if obj.group:
+            # Clear existing groups
+            obj.groups.clear()
+            # Add the new group
+            obj.groups.add(obj.group)
+            # Set is_staff to True if user has a group
+            obj.is_staff = True
+            obj.save()
 
+    def response_add(self, request, obj, post_url_continue=None):
+        return HttpResponseRedirect("/admin/accounts/user/")
+    
    
 
 # Student profile model 

@@ -26,6 +26,7 @@ urlpatterns = [
     # path('login/', views.login_view, name='login'),
     # path('signup/', views.signup_view, name='signup'),
     path('accounts/', include('apps.accounts.urls')),
+    path('rooms/', include('apps.rooms.urls')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('logout/', views.logout_view, name='logout'),

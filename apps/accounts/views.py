@@ -2,16 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from .models import User
 from django.contrib.auth.hashers import make_password
 import re
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
@@ -323,3 +324,31 @@ def housekeeping_dashboard(request):
         messages.error(request, 'You do not have permission to access this page.')
         return redirect('home')
     return render(request, 'housekeeping/dashboard.html')
+
+@csrf_exempt
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_user_stats(request):
+    try:
+        # Get total users count
+        total_users = User.objects.count()
+        
+        # Get counts for each role
+        admin_count = User.objects.filter(group__name='Admin').count()
+        student_count = User.objects.filter(group__name='Student').count()
+        maintenance_count = User.objects.filter(group__name='Maintenance').count()
+        receptionist_count = User.objects.filter(group__name='Receptionist').count()
+        housekeep_count = User.objects.filter(group__name='Housekeeping').count()
+
+        data = {
+            'total_users': total_users,
+            'admin_count': admin_count,
+            'student_count': student_count,
+            'maintenance_count': maintenance_count,
+            'receptionist_count': receptionist_count,
+            'housekeep_count': housekeep_count
+        }
+        
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

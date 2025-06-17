@@ -88,21 +88,17 @@
                     <div class="card-header bg-info text-white">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">Guest Logs</h5>
-                            <h2 class="mb-0" style="padding-left: 10px;">85</h2>
+                            <h2 class="mb-0" style="padding-left: 10px;" id="total-guests-count">0</h2>
                         </div>
                     </div>
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Current Guests</label>
-                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">45</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;" id="current-guests-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Checked Out</label>
-                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">30</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <label>Extended Stay</label>
-                            <span class="badge bg-primary" style="font-size: 1.1rem; font-weight: 700;">10</span>
+                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;" id="checked-out-count">0</span>
                         </div>
                     </div>
                 </div>
@@ -234,7 +230,7 @@
                 console.log('Fetching room stats...');
                 
                 fetch('/rooms/api/dashboard/room-stats/', {
-                    method: 'GET',
+                    method: 'GET', 
                     headers: {
                         'X-CSRFToken': csrftoken,
                         'Accept': 'application/json',
@@ -332,16 +328,58 @@
                 });
             }
 
+            // Function to fetch and update guest log counts
+            function updateGuestLogCounts() {
+                const csrftoken = getCookie('csrftoken');
+                console.log('Fetching guest log stats...');
+                
+                fetch('/rooms/api/dashboard/guest-stats/', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    mode: 'same-origin'
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received guest log data:', data);
+                    
+                    // Update total guests count in the header
+                    document.getElementById('total-guests-count').textContent = data.total_guests || 0;
+                    
+                    // Update current guests count
+                    document.getElementById('current-guests-count').textContent = data.current_guests || 0;
+                    
+                    // Update checked out count
+                    document.getElementById('checked-out-count').textContent = data.checked_out || 0;
+                })
+                .catch(error => {
+                    console.error('Error fetching guest log stats:', error);
+                    console.error('Error details:', error.message);
+                });
+            }
+
             // Initial load
             console.log('Starting stats update...');
             updateUserCounts();
             updateRoomCounts();
+            updateGuestLogCounts();
 
             // Update every 30 seconds
             setInterval(() => {
                 console.log('Refreshing stats...');
                 updateUserCounts();
                 updateRoomCounts();
+                updateGuestLogCounts();
             }, 30000);
         });
     </script>

@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for building Python packages
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     libcairo2-dev \
@@ -14,8 +14,13 @@ RUN apt-get update && apt-get install -y \
 # Upgrade pip
 RUN python -m pip install --upgrade pip
 
-# Copy and install Python dependencies
-COPY requirements.txt .
+# Copy static files first (if any)
+COPY static /app/static/
+
+# Copy project code
+COPY . /app/
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000

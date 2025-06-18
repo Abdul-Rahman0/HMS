@@ -88,21 +88,17 @@
                     <div class="card-header bg-info text-white">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">Guest Logs</h5>
-                            <h2 class="mb-0" style="padding-left: 10px;">85</h2>
+                            <h2 class="mb-0" style="padding-left: 10px;" id="total-guests-count">0</h2>
                         </div>
                     </div>
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Current Guests</label>
-                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">45</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;" id="current-guests-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Checked Out</label>
-                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">30</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <label>Extended Stay</label>
-                            <span class="badge bg-primary" style="font-size: 1.1rem; font-weight: 700;">10</span>
+                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;" id="checked-out-count">0</span>
                         </div>
                     </div>
                 </div>
@@ -116,26 +112,23 @@
                     <div class="card-header bg-warning text-white">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">Maintenance Requests</h5>
-                            <h2 class="mb-0" style="padding-left: 10px;">50</h2>
+                            <h2 class="mb-0" style="padding-left: 10px;" id="total-maintenance-count">0</h2>
                         </div>
                     </div>
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Completed Requests</label>
-                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">25</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;" id="completed-maintenance-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Pending Requests</label>
-                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;">15</span>
+                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;" id="pending-maintenance-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>In Progress</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">10</span>
+                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;" id="in-progress-maintenance-count">0</span>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <label>Total Requests</label>
-                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">50</span>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -146,29 +139,21 @@
                     <div class="card-header bg-danger text-white">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">Payment Status</h5>
-                            <h2 class="mb-0" style="padding-left: 10px;">25</h2>
+                            <h2 class="mb-0" style="padding-left: 10px;" id="total-students-count">0</h2>
                         </div>
                     </div>
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Total Students</label>
-                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">25</span>
+                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;" id="total-students-count-badge">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Fee Submitted</label>
-                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">18</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;" id="paid-students-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Fee Pending</label>
-                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;">7</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <label>Total Amount</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">₹250,000</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <label>Pending Amount</label>
-                            <span class="badge bg-warning" style="font-size: 1.1rem; font-weight: 700;">₹70,000</span>
+                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;" id="pending-students-count">0</span>
                         </div>
                     </div>
                 </div>
@@ -180,29 +165,25 @@
                     <div class="card-header bg-primary text-white">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title mb-0">Total Bookings</h5>
-                            <h2 class="mb-0" style="padding-left: 10px;">120</h2>
+                            <h2 class="mb-0" style="padding-left: 10px;" id="total-bookings-count">0</h2>
                         </div>
                     </div>
                     <div class="card-body" style="height: 250px; overflow-y: auto;">
                         <div class="d-flex justify-content-between mb-2">
                             <label>Active Bookings</label>
-                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;">45</span>
+                            <span class="badge bg-success" style="font-size: 1.1rem; font-weight: 700;" id="active-bookings-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Completed Bookings</label>
-                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;">60</span>
+                            <span class="badge bg-info" style="font-size: 1.1rem; font-weight: 700;" id="completed-bookings-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Cancelled Bookings</label>
-                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;">15</span>
+                            <span class="badge bg-danger" style="font-size: 1.1rem; font-weight: 700;" id="cancelled-bookings-count">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <label>Today's Bookings</label>
-                            <span class="badge bg-warning" style="font-size: 1.1rem; font-weight: 700;">8</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <label>Total Revenue</label>
-                            <span class="badge bg-secondary" style="font-size: 1.1rem; font-weight: 700;">₹350,000</span>
+                            <span class="badge bg-warning" style="font-size: 1.1rem; font-weight: 700;" id="today-bookings-count">0</span>
                         </div>
                     </div>
                 </div>
@@ -234,7 +215,7 @@
                 console.log('Fetching room stats...');
                 
                 fetch('/rooms/api/dashboard/room-stats/', {
-                    method: 'GET',
+                    method: 'GET', 
                     headers: {
                         'X-CSRFToken': csrftoken,
                         'Accept': 'application/json',
@@ -332,16 +313,223 @@
                 });
             }
 
+            // Function to fetch and update guest log counts
+            function updateGuestLogCounts() {
+                const csrftoken = getCookie('csrftoken');
+                console.log('Fetching guest log stats...');
+                
+                fetch('/rooms/api/dashboard/guest-stats/', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    mode: 'same-origin'
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received guest log data:', data);
+                    
+                    // Update total guests count in the header
+                    document.getElementById('total-guests-count').textContent = data.total_guests || 0;
+                    
+                    // Update current guests count
+                    document.getElementById('current-guests-count').textContent = data.current_guests || 0;
+                    
+                    // Update checked out count
+                    document.getElementById('checked-out-count').textContent = data.checked_out || 0;
+                })
+                .catch(error => {
+                    console.error('Error fetching guest log stats:', error);
+                    console.error('Error details:', error.message);
+                });
+            }
+
+            // Function to fetch and update maintenance request counts
+            function updateMaintenanceCounts() {
+                const csrftoken = getCookie('csrftoken');
+                console.log('Fetching maintenance stats...');
+                
+                fetch('/maintenance/api/dashboard/maintenance-stats/', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    mode: 'same-origin'
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received maintenance data:', data);
+                    
+                    // Update total maintenance count in the header
+                    document.getElementById('total-maintenance-count').textContent = data.total_requests || 0;
+                    
+                    // Update completed requests count
+                    document.getElementById('completed-maintenance-count').textContent = data.completed_requests || 0;
+                    
+                    // Update pending requests count
+                    document.getElementById('pending-maintenance-count').textContent = data.pending_requests || 0;
+                    
+                    // Update in progress requests count
+                    document.getElementById('in-progress-maintenance-count').textContent = data.in_progress_requests || 0;
+                })
+                .catch(error => {
+                    console.error('Error fetching maintenance stats:', error);
+                    console.error('Error details:', error.message);
+                });
+            }
+
+            // Function to fetch and update payment status
+            function updatePaymentStatus() {
+                const csrftoken = getCookie('csrftoken');
+                console.log('Fetching payment status...');
+                
+                fetch('/accounts/api/dashboard/payment-status/', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    mode: 'same-origin'
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received payment status data:', data);
+                    
+                    // Update total students count
+                    const totalStudentsElement = document.getElementById('total-students-count');
+                    if (totalStudentsElement) {
+                        totalStudentsElement.textContent = data.total_students || 0;
+                    }
+                    
+                    // Update total students count badge
+                    const totalStudentsBadge = document.getElementById('total-students-count-badge');
+                    if (totalStudentsBadge) {
+                        totalStudentsBadge.textContent = data.total_students || 0;
+                    }
+                    
+                    // Update paid students count
+                    const paidStudentsElement = document.getElementById('paid-students-count');
+                    if (paidStudentsElement) {
+                        paidStudentsElement.textContent = data.paid_students || 0;
+                    }
+                    
+                    // Update pending students count
+                    const pendingStudentsElement = document.getElementById('pending-students-count');
+                    if (pendingStudentsElement) {
+                        pendingStudentsElement.textContent = data.pending_students || 0;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching payment status:', error);
+                    console.error('Error details:', error.message);
+                });
+            }
+
+            // Function to fetch and update booking stats
+            function updateBookingStats() {
+                const csrftoken = getCookie('csrftoken');
+                console.log('Fetching booking stats...');
+                
+                fetch('/bookings/api/dashboard/booking-stats/', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    mode: 'same-origin'
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received booking stats data:', data);
+                    
+                    // Update total bookings count
+                    const totalBookingsElement = document.getElementById('total-bookings-count');
+                    if (totalBookingsElement) {
+                        totalBookingsElement.textContent = data.total_bookings || 0;
+                    }
+                    
+                    // Update active bookings count
+                    const activeBookingsElement = document.getElementById('active-bookings-count');
+                    if (activeBookingsElement) {
+                        activeBookingsElement.textContent = data.active_bookings || 0;
+                    }
+                    
+                    // Update completed bookings count
+                    const completedBookingsElement = document.getElementById('completed-bookings-count');
+                    if (completedBookingsElement) {
+                        completedBookingsElement.textContent = data.completed_bookings || 0;
+                    }
+                    
+                    // Update cancelled bookings count
+                    const cancelledBookingsElement = document.getElementById('cancelled-bookings-count');
+                    if (cancelledBookingsElement) {
+                        cancelledBookingsElement.textContent = data.cancelled_bookings || 0;
+                    }
+                    
+                    // Update today's bookings count
+                    const todayBookingsElement = document.getElementById('today-bookings-count');
+                    if (todayBookingsElement) {
+                        todayBookingsElement.textContent = data.today_bookings || 0;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching booking stats:', error);
+                    console.error('Error details:', error.message);
+                });
+            }
+
             // Initial load
             console.log('Starting stats update...');
             updateUserCounts();
             updateRoomCounts();
+            updateGuestLogCounts();
+            updateMaintenanceCounts();
+            updatePaymentStatus();
+            updateBookingStats();
 
             // Update every 30 seconds
             setInterval(() => {
                 console.log('Refreshing stats...');
                 updateUserCounts();
                 updateRoomCounts();
+                updateGuestLogCounts();
+                updateMaintenanceCounts();
+                updatePaymentStatus();
+                updateBookingStats();
             }, 30000);
         });
     </script>

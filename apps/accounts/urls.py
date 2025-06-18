@@ -24,4 +24,5 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('profile/change-password/', views.change_password, name='change_password'),
     path('api/dashboard/user-stats/', views.get_user_stats, name='user_stats'),
+    path('api/dashboard/payment-status/', views.get_payment_status, name='payment_status'),
 ] 

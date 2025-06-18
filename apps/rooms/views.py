@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-from .models import Room
+from .models import Room, GuestLog
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -25,6 +26,25 @@ def get_room_stats(request):
             'occupied_rooms': occupied_rooms,
             'available_rooms': available_rooms,
             'maintenance_rooms': maintenance_rooms
+        }
+        
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def guest_dashboard_stats(request):
+    try:
+        # Get current guests (those who haven't checked out)
+        current_guests = GuestLog.objects.filter(check_out_time__isnull=True).count()
+        
+        # Get checked out guests
+        checked_out = GuestLog.objects.filter(check_out_time__isnull=False).count()
+        
+        data = {
+            'total_guests': current_guests + checked_out,
+            'current_guests': current_guests,
+            'checked_out': checked_out
         }
         
         return JsonResponse(data)

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.accounts import views
+import os
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -27,6 +28,9 @@ urlpatterns = [
     # path('signup/', views.signup_view, name='signup'),
     path('accounts/', include('apps.accounts.urls')),
     path('rooms/', include('apps.rooms.urls')),
+    path('maintenance/', include('apps.maintenance.urls')),
+    path('payments/', include('apps.payments.urls')),
+    path('bookings/', include('apps.bookings.urls')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('logout/', views.logout_view, name='logout'),

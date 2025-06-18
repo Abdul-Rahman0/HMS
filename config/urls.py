@@ -28,6 +28,8 @@ urlpatterns = [
     path('accounts/', include('apps.accounts.urls')),
     path('rooms/', include('apps.rooms.urls')),
     path('maintenance/', include('apps.maintenance.urls')),
+    path('payments/', include('apps.payments.urls')),
+    path('bookings/', include('apps.bookings.urls')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('logout/', views.logout_view, name='logout'),

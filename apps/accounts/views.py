@@ -13,6 +13,9 @@ from django.contrib.auth.hashers import make_password
 import re
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import Group
+from django.utils import timezone
+from apps.payments.models import Payment
+from .models import StudentProfile
 
 # Create your views here.
 
@@ -347,6 +350,42 @@ def get_user_stats(request):
             'maintenance_count': maintenance_count,
             'receptionist_count': receptionist_count,
             'housekeep_count': housekeep_count
+        }
+        
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_payment_status(request):
+    try:
+        today = timezone.now().date()
+        first_day = today.replace(day=1)
+        last_day = today
+
+        # Get total students count
+        total_students = StudentProfile.objects.count()
+        
+        # Get paid students this month
+        paid_students = Payment.objects.filter(
+            status='paid',
+            payment_date__gte=first_day,
+            payment_date__lte=last_day
+        ).values('student').distinct().count()
+
+        # Get pending students this month
+        pending_students = Payment.objects.filter(
+            status='pending',
+            payment_date__gte=first_day,
+            payment_date__lte=last_day
+        ).values('student').distinct().count()
+
+        data = {
+            'total_students': total_students,
+            'paid_students': paid_students,
+            'pending_students': pending_students
         }
         
         return JsonResponse(data)

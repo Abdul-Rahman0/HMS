@@ -1,0 +1,25 @@
+{% extends "registration/base.html" %}
+
+{% load i18n %}
+
+
+
+{% block content %}
+<style>
+.login-logo {
+    width: 150px;
+    margin: auto;
+}
+.login-logo img {
+
+    max-width: 100%;
+}
+</style>
+    <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
+    <p class="text-center">
+        {% trans "Thanks for spending some quality time with the web app today." %}
+    </p>
+    <a class="btn {{ jazzmin_ui.button_classes.primary }} btn-block" href="{% url 'admin:index' %}">
+        {% trans 'Log in again' %}
+    </a>
+{% endblock %}

@@ -5,6 +5,17 @@
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block content %}
+<style>
+.login-logo {
+    width: 150px;
+    margin: auto;
+}
+.login-logo img {
+
+    max-width: 100%;
+
+}
+</style>
     <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
     <form action="{{ app_path }}" method="post">
         {% csrf_token %}

@@ -334,14 +334,13 @@ def housekeeping_dashboard(request):
 def get_user_stats(request):
     try:
         # Get total users count
-        total_users = User.objects.count()
-        
+        total_users = User.objects.filter(is_staff = True,is_active=True).exclude(is_superuser=True).count()
         # Get counts for each role
-        admin_count = User.objects.filter(group__name='Admin').count()
-        student_count = User.objects.filter(group__name='Student').count()
-        maintenance_count = User.objects.filter(group__name='Maintenance').count()
-        receptionist_count = User.objects.filter(group__name='Receptionist').count()
-        housekeep_count = User.objects.filter(group__name='Housekeeping').count()
+        admin_count = User.objects.filter(group__name='Admin',is_staff = True,is_active=True).count()
+        student_count = User.objects.filter(group__name='Student',is_staff = True,is_active=True).count()
+        maintenance_count = User.objects.filter(group__name='Maintenance',is_staff = True,is_active=True).count()
+        receptionist_count = User.objects.filter(group__name='Receptionist',is_staff = True,is_active=True).count()
+        housekeep_count = User.objects.filter(group__name='Housekeeping',is_staff = True,is_active=True).count()
 
         data = {
             'total_users': total_users,

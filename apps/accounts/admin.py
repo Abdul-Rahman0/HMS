@@ -16,13 +16,14 @@ from django.utils.translation import gettext_lazy as _
 class UserAdmin(BaseUserAdmin):
     
     search_fields = ('username', 'email', 'first_name', 'last_name')
+    list_filter = ('username','group' , 'is_active')
     ordering = ('username',)
-    list_display = ('username', 'email', 'first_name', 'last_name', 'group', 'is_active', 'action_buttons')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'group', 'is_active' ,'action_buttons')
     
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'group', 'is_active'),
+            'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'group',),
         }),
     )
 
@@ -37,9 +38,12 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('guardian_name', 'guardian_phone', 'guardian_email')
         }),
     )
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.exclude(is_superuser=True)
     class Media:
         css = {
-            'all': ('admin/css/custom_admin.css',)  # custom css ka path
+            'all': ('admin/css/custom_admin.css',)
         }
     def get_urls(self):
         urls = super().get_urls()
@@ -74,6 +78,7 @@ class UserAdmin(BaseUserAdmin):
         )
     action_buttons.short_description = 'Student Status'
     
+
     def save_model(self, request, obj, form, change):
         # First save the user
         super().save_model(request, obj, form, change)
@@ -85,7 +90,8 @@ class UserAdmin(BaseUserAdmin):
             # Add the new group
             obj.groups.add(obj.group)
             # Set is_staff to True if user has a group
-            obj.is_staff = True
+            # obj.is_staff = True
+            # obj.is_active = True
             obj.save()
 
     def response_add(self, request, obj, post_url_continue=None):

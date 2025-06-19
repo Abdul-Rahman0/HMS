@@ -126,7 +126,3 @@ class StudentProfileAdmin(admin.ModelAdmin):
     
 # Register your models here.
 
-
-# admin.site.register(StaffProfile)
-admin.site.register(HostelApplication)
-admin.site.register(HostelCertificate)

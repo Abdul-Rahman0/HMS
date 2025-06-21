@@ -51,9 +51,9 @@ class MaintenanceStaffAdmin(admin.ModelAdmin):
     
     
     
-@admin.register(Receptionist)
-class ReceptionistAdmin(admin.ModelAdmin):
-    list_display = [('user')]
+# @admin.register(Receptionist)
+# class ReceptionistAdmin(admin.ModelAdmin):
+#     list_display = [('user')]
     
 @admin.register(MaintenanceRequest)
 class MaintenanceRequestAdmin(admin.ModelAdmin):

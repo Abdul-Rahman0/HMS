@@ -34,21 +34,16 @@ A comprehensive hostel management system built with Django and PostgreSQL, featu
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd hostel-management-system
+cd HMS
 ```
 
-2. Create and activate a virtual environment:
+2. Create and Buil in Docker:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+docker compose up --build
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
 
-4. Set up environment variables:
+3. Set up environment variables:
 Create a `.env` file in the project root with the following variables:
 ```
 DEBUG=True
@@ -60,13 +55,18 @@ EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-app-password
 ```
 
-5. Run migrations:
+4. moving inside docker:
 ```bash
-python manage.py makemigrations
-python manage.py migrate
-```
 
-6. Create a superuser:
+docker exec -it django_app bash
+then run this migraioins
+
+   
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+5. Create a superuser:
 ```bash
 python manage.py createsuperuser
 ```

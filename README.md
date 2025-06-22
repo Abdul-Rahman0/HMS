@@ -64,6 +64,7 @@ then run this migraioins
    
     python manage.py makemigrations
     python manage.py migrate
+    python manage.py collectstatic
     ```
 
 5. Create a superuser:

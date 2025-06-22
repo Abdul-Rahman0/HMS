@@ -8,11 +8,15 @@ from apps.accounts.models import StudentProfile,User
 
 User = get_user_model()
 
+from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Receptionist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Receptionist_profile')
-    def __str__(self):
-        return f"{self.user.username} (Maintenance ID: {self.id})"
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='receptionist_profile')
+    
+
 
 #  Maintenance request
 

@@ -13,13 +13,3 @@ class HouseKeepingLog(models.Model):
 
     def __str__(self):
         return f"Log {self.id} - Room {self.room.room_number}"
-
-    def mark_cleaned(self, room_id):
-        self.room_id = room_id
-        self.cleaned_at = timezone.now()
-        self.save()
-
-    def add_note_to_log(self, log_id, notes):
-        if self.pk == log_id:
-            self.notes = notes
-            self.save()

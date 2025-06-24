@@ -57,9 +57,19 @@ class MaintenanceStaffAdmin(admin.ModelAdmin):
     
 @admin.register(MaintenanceRequest)
 class MaintenanceRequestAdmin(admin.ModelAdmin):
+    fields = (
+        "room", "student", "issue", "status",
+        "assigned_to", "resolved_at",
+        "request_create"
+    )
     list_display = ('room', 'issue', 'status', 'assigned_to', 'created_at', 'resolved_at')
     list_filter = ('status', 'created_at')
-    search_fields = ('room__room_number', 'issue', 'assigned_to__username', 'student__username', 'staff__username')
+    search_fields = (
+        'room__room_number',
+        'issue',
+        'assigned_to__username',
+        'student__user__username',
+    )    
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "assigned_to":
             kwargs["queryset"] = User.objects.filter(groups__name="Maintenance")

@@ -78,4 +78,4 @@ class MaintenanceStaff(models.Model):
     
 
     def __str__(self):
-        return f"{self.user.username} (Maintenance ID: {self.id})"
+        return f"{self.user} (Maintenance ID: {self.id})"

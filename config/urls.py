@@ -55,3 +55,7 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('profile/change-password/', views.change_password, name='change_password'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# ✅ Add this block to serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

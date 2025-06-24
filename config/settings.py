@@ -97,6 +97,7 @@ DEBUG = True  # 👈 Development me ye True hona chahiye
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # 👈 Ye wohi folder hai jisme file hai
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # ✅ Media Files
 MEDIA_URL = '/media/'
@@ -122,6 +123,6 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
 JAZZMIN_SETTINGS = {
-    "site_logo": "https://u.pcloud.link/publink/show?code=XZ6zKu5ZxN9QLzSCSeFaq3WyQCvxdpoMVrnV",
-    "login_logo": "https://u.pcloud.link/publink/show?code=XZ6zKu5ZxN9QLzSCSeFaq3WyQCvxdpoMVrnV",
+    "site_logo": "images/universty_logo.jpeg",
+    "login_logo": "images/universty_logo.jpeg",
 }
